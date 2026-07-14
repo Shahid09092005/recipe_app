@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% block start %}
+
+<style>
+    .page-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 40px;
+        background: #f4f7f6;
+        min-height: 100vh;
+    }
+
+    .veg-form {
+        background: #ffffff;
+        padding: 25px;
+        width: 380px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .veg-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2d6a4f;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    input:focus, textarea:focus {
+        border-color: #2d6a4f;
+        box-shadow: 0 0 5px rgba(45, 106, 79, 0.3);
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #2d6a4f;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #1b4332;
+    }
+
+    hr {
+        margin-top: 30px;
+    }
+</style>
+
+ {% comment %} below's style for searching {% endcomment %}
+    <style>
+    .search-container {
+        width: 50%;
+        margin: 60px auto;
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .search-box {
+        width: 80%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .search-box:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 5px rgba(40,167,69,0.4);
+    }
+
+    .search-btn {
+        margin-top: 15px;
+        padding: 12px 20px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .search-btn:hover {
+        background: #218838;
+    }
+
+    .result-box {
+        margin-top: 25px;
+        text-align: left;
+    }
+
+    .recipe-card {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border-left: 5px solid #28a745;
+    }
+
+</style>
+{% comment %} close searching style {% endcomment %}
+
+
+<div class="page-wrapper">
+
+    <form method="POST" enctype="multipart/form-data" class="veg-form">
+        {% csrf_token %}
+
+        <h2>Add Vegetable</h2>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="recipe_name" value = "{{recipe_data.recipe_name}}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" name="recipe_price" step="0.1" value = "{{recipe_data.recipe_price}}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="recipe_description" rows="4">{{recipe_data.recipe_description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Image</label>
+
+            {% if recipe_data.recipe_image %}
+            {% comment %} D:\Recipe Management System\core\media\Home\recipe_images\img.jpg {% endcomment %}
+                <img src="{{ recipe_data.recipe_image }}" width="150">
+            {% endif %}
+
+            <input type="file" name="recipe_image" accept="image/*">
+        </div>
+
+        <button type="submit">Save Vegetable</button>
+    </form>
+
+</div>
+
+{% comment %} searching form is start here {% endcomment %}
+
+<div class="search-container">
+
+    <h2>Search Recipe 🍲</h2>
+
+    <form method="GET">
+        <input type="text"
+               name="search_query"
+               placeholder="Enter recipe name..."
+               class="search-box"
+               {% comment %} Django template variable. {% endcomment %}
+               value="{{ search_query}}"> 
+
+        <br>
+
+        <button type="submit" class="search-btn">Search</button>
+    </form>
+
+</div>
+
+{% comment %} searcing form is end from above {% endcomment %}
+
+<hr>
+{% comment %} showing details of vegetables added by user {% endcomment %}
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; text-align:center; border-collapse: collapse;">
+    <thead style="background-color:#2d6a4f; color:white;">
+        <tr>
+            <th>Serial No.</th>
+            <th>Django ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data_query %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.recipe_name }}</td>
+            <td>₹{{ item.recipe_price }}</td>
+            <td>{{ item.recipe_description }}</td>
+            <td>
+                {% if item.recipe_image %}
+                    <img src="{{ item.recipe_image.url }}" width="300" height="250" style="border-radius:8px;">
+                {% else %}
+                    No Image
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'get_delete_recipe' item.id %}" 
+                style="display:inline-block; background-color:#e63946; color:white; 
+                padding:8px 12px; border-radius:6px; text-decoration:none;">
+                Delete
+                </a>
+                <a href="{% url 'get_update_recipe' item.id %}" 
+                style="display:inline-block; background-color:green; color:white;
+                padding:8px 12px; border-radius:6px; margin:7px; text-decoration:none;">
+                Update
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+{% endblock %}

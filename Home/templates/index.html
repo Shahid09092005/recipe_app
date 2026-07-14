@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block start %}
+    <table>
+        <caption>People Information</caption>
+        {{people}}
+        <thead>
+            <tr>
+                <th>Serial No.</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Hobbies</th>
+                <th>State</th>
+                <th>Eligible for Voting</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for peopleInfo in people  %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ peopleInfo.name }}</td>
+                <td>{{ peopleInfo.age }}</td>
+                <td>{{ peopleInfo.hobbies|join:", " }}</td>
+                <td>{{ peopleInfo.state }}</td>
+               <td style="color : {% if peopleInfo.age > 18 %} green {% else %} red {% endif %};">
+               {% comment %} <td style="color: {% if peopleInfo.age > 18 %}green{% else %}red{% endif %};"> {% endcomment %}
+                {% if peopleInfo.age > 18 %}
+                    Yes
+                {% else %}
+                    No
+                {% endif%}
+               </td>
+            </tr>
+            {% endfor %}
+           
+        </tbody>
+    </table>
+
+  {% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block start %}
+<style>
+    /* Login Page Container */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+/* Login Box */
+.login-box {
+    width: 350px;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Heading */
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 28px;
+}
+
+/* Input Group */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #555;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(255, 107, 107, 0.4);
+}
+
+/* Login Button */
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-box button:hover {
+    background: #4CAF50;
+}
+
+/* Signup Text */
+.signup {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.signup a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup a:hover {
+    text-decoration: underline;
+}
+</style>
+
+    <div class="login-container">
+        <form class="login-box" method="POST">
+            {% csrf_token %}
+            <h2>Login</h2>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email" name="gmail" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="Enter your password"  name="password" required>
+            </div>
+
+            <button type="submit">Login</button>
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <p style="color:red;">{{ message }}</p>
+                    {% endif %}
+
+                    {% if message.tags == 'success' %}
+                        <p style="color:green;">{{ message }}</p>
+                    {% endif %}
+                {% endfor %}
+
+            <p class="signup">
+                Don't have an account? <a href="/user_register">Sign up</a>
+            </p>
+        </form>
+    </div>
+{% endblock %}

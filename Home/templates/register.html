@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block start %}
+<style>
+    /* Register Page Container */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fff5f5, #ffe3e3);
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+/* Register Box */
+.login-box {
+    width: 380px;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Heading */
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 28px;
+}
+
+/* Input Fields */
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #444;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+}
+
+/* Register Button */
+.login-box button {
+    width: 100%;
+    padding: 13px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+.login-box button:hover {
+    background: #3e8e41;
+}
+
+/* Login Link */
+.signup {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.signup a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 450px) {
+    .login-box {
+        width: 90%;
+        padding: 25px;
+    }
+
+    .login-box h2 {
+        font-size: 24px;
+    }
+}
+</style>
+
+    <div class="login-container">
+        <form class="login-box" method="POST">
+            {% csrf_token %}
+            <h2>Create Account</h2>
+
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Enter your name" name = "fullname" required>
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email" name = "gmail" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="Create password" name="password" required>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" placeholder="confirm_password" name="confirm_password" required>
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <p style="color:red;">{{ message }}</p>
+                    {% endif %}
+
+                    {% if message.tags == 'success' %}
+                        <p style="color:green;">{{ message }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <button type="submit">Register</button>
+
+            <p class="signup">
+                Already have an account? 
+                <a href="/user_login/">Login</a>
+            </p>
+        </form>
+    </div>
+{% endblock %}

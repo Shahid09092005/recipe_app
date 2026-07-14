@@ -1,0 +1,23 @@
+
+__pycache__
+*.py[cod]
+core/.env
+# Django database
+db.sqlite3
+*.sqlite3
+
+# User uploaded files
+media/
+
+# Environment variables
+.env
+
+# Virtual environment
+myenv/
+venv/
+
+# IDE files
+.vscode/
+
+# Django static collected files
+staticfiles/
