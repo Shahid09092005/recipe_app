@@ -37,7 +37,9 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "food-recipe-management-system-3.onrender.com",
+    "https://food-recipe-management-system-3.onrender.com",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
 ]
 
 
