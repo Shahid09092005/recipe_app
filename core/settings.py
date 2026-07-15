@@ -31,13 +31,13 @@ SECRET_KEY =config("SECRET_KEY")
 DEBUG = False # for deployment value is false
 
 ALLOWED_HOSTS = [
-    "https://recipe-app-manage.onrender.com/",
+    "recipe-app-manage.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://food-recipe-management-system-3.onrender.com",
+    "https://recipe-app-manage.onrender.com",
     "http://127.0.0.1:8000",
     "http://localhost:8000",
 ]
