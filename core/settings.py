@@ -31,7 +31,7 @@ SECRET_KEY =config("SECRET_KEY")
 DEBUG = False # for deployment value is false
 
 ALLOWED_HOSTS = [
-    "your-app-name.onrender.com",
+    "https://recipe-app-manage.onrender.com/",
     "localhost",
     "127.0.0.1",
 ]
